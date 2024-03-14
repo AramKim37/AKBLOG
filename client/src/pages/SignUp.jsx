@@ -1,7 +1,29 @@
 import { Button, Label, TextInput } from "flowbite-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
+  const [formData, setFormData] = useState({});
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(formData);
+
   return (
     <div className="min-h-screen mt-20">
       <div className="flex flex-col md:flex-row max-w-3xl mx-auto gap-5 p-3 md:items-center">
@@ -17,29 +39,44 @@ const SignUp = () => {
           </h3>
         </div>
         <div className="flex-1">
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
               <Label value="Your name" />
-              <TextInput placeholder="Username" type="text" id="username" />
+              <TextInput
+                placeholder="Username"
+                type="text"
+                id="username"
+                onChange={handleChange}
+              />
             </div>
             <div className="flex flex-col gap-2">
               <Label value="Your email" />
-              <TextInput placeholder="Email" type="text" id="email" />
+              <TextInput
+                placeholder="Email"
+                type="email"
+                id="email"
+                onChange={handleChange}
+              />
             </div>
             <div className="flex flex-col gap-2">
               <Label value="Your password" />
-              <TextInput placeholder="Password" type="text" id="username" />
+              <TextInput
+                placeholder="Password"
+                type="password"
+                id="password"
+                onChange={handleChange}
+              />
             </div>
             <Button type="submit" gradientDuoTone="purpleToBlue">
               Sign Up
             </Button>
-            <div className="flex gap-2 text-sm mt-5">
-              <h3>Have an account?</h3>
-              <Link to="/signin" className="text-blue-500">
-                Sign in
-              </Link>
-            </div>
           </form>
+          <div className="flex gap-2 text-sm mt-5">
+            <h3>Have an account?</h3>
+            <Link to="/sign-in" className="text-blue-500">
+              Sign in
+            </Link>
+          </div>
         </div>
       </div>
     </div>
