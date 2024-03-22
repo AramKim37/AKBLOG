@@ -67,7 +67,7 @@ const SignIn = () => {
             <div className="flex flex-col gap-2">
               <Label value="Your password" />
               <TextInput
-                placeholder="Password"
+                placeholder="********"
                 type="password"
                 id="password"
                 onChange={handleChange}
@@ -84,14 +84,14 @@ const SignIn = () => {
                   <span className="pl-3">Loading...</span>
                 </>
               ) : (
-                "Sign Up"
+                "Sign In"
               )}
             </Button>
           </form>
           <div className="flex gap-2 text-sm mt-5">
-            <h3>Have an account?</h3>
-            <Link to="/sign-in" className="text-blue-500">
-              Sign in
+            <h3>Don`t Have an account?</h3>
+            <Link to="/sign-up" className="text-blue-500">
+              Sign up
             </Link>
           </div>
           {errorMessage && (
